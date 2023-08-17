@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 import { log } from 'utils'
-import { existsSync } from 'node:fs'
-import { buildSync, build } from 'esbuild'
+import { buildSync } from 'esbuild'
 import { execSync } from 'child_process'
 
 export const build_api = (cf: any, dir: string) => {
