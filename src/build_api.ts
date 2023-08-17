@@ -11,7 +11,6 @@ export const build_api = (cf: any, dir: string) => {
     const outDir = `${dir}/build`
     const input = `${dir}/src/index.ts`
     const output = `${dir}/build/index.js`
-    const tsconfig = `${dir}/tsconfig.json`
 
     try {
 
@@ -21,7 +20,6 @@ export const build_api = (cf: any, dir: string) => {
         buildSync({
             entryPoints: [input],
             platform: "node",
-            tsconfig: tsconfig,
             outfile: output,
             bundle: true,
             minify: true,
@@ -29,7 +27,7 @@ export const build_api = (cf: any, dir: string) => {
             format: 'cjs',
         })
 
-        cf.types && execSync(`tsc --emitDeclarationOnly --build ${tsconfig} --outDir ${outDir} --baseUrl ${inDir}`)
+        cf.types && execSync(`tsc --emitDeclarationOnly --declaration --outDir ${outDir} --baseUrl ${inDir}`)
 
         cf.debug && log.info(`[ubin]: Building completed`)
 
