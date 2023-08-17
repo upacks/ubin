@@ -26,7 +26,7 @@ export const build_api = (cf: any, dir: string) => {
             format: 'cjs',
         })
 
-        cf.types && execSync(`tsc --emitDeclarationOnly --declaration --outDir ${outDir} --baseUrl ${inDir}`)
+        cf.types && execSync(`tsc --emitDeclarationOnly --moduleDetection force --outDir ${outDir} --baseUrl ${inDir}`)
 
         cf.debug && log.info(`[ubin]: Building completed`)
 
