@@ -2,12 +2,16 @@
 
 import { log } from 'utils'
 import { readFileSync, existsSync } from 'node:fs'
+import path from 'path'
 import { build_api } from './build_api'
 
 const args: string[] = process.argv
-const dir: string = __dirname + '/../../..'
+const dir: string = path.join(__dirname, '..', '..', '..') // __dirname + '/../../..'
 
 if (existsSync(`${dir}/package.json`)) {
+
+    console.log(args)
+    console.log(dir)
 
     const pkg: any = JSON.parse(String(readFileSync(`${dir}/package.json`) ?? ""))
 

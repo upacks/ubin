@@ -11,23 +11,14 @@ export const build_api = (cf: any, dir: string) => {
     const outDir = `${dir}/build`
     const input = `${dir}/src/index.ts`
     const output = `${dir}/build/index.js`
-    const tsconfig = existsSync(`${dir}/tsconfig.json`) ? `${dir}/tsconfig.json` : `${__dirname}/../tsapi.json`
+    const tsconfig = `${dir}/tsconfig.json`
 
     try {
 
         cf.debug && log.info(`[ubin]: Building source ${input}`)
         cf.debug && log.info(`[ubin]: Building output ${output}`)
 
-        const type_generator = {
-            name: 'TypeGenerator',
-            setup(build) {
-                cf.types && build.onEnd((result) => {
-                    result.errors.length === 0 && execSync(`tsc --emitDeclarationOnly --build ${tsconfig} --outDir ${outDir} --baseUrl ${inDir}`)
-                })
-            }
-        }
-
-        build({
+        buildSync({
             entryPoints: [input],
             platform: "node",
             tsconfig: tsconfig,
@@ -36,8 +27,9 @@ export const build_api = (cf: any, dir: string) => {
             minify: true,
             sourcemap: false,
             format: 'cjs',
-            plugins: [type_generator]
         })
+
+        cf.types && execSync(`tsc --emitDeclarationOnly --build ${tsconfig} --outDir ${outDir} --baseUrl ${inDir}`)
 
         cf.debug && log.info(`[ubin]: Building completed`)
 

@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.build_api = void 0;
 const utils_1 = require("utils");
-const node_fs_1 = require("node:fs");
 const esbuild_1 = require("esbuild");
 const child_process_1 = require("child_process");
 const build_api = (cf, dir) => {
@@ -11,19 +10,11 @@ const build_api = (cf, dir) => {
     const outDir = `${dir}/build`;
     const input = `${dir}/src/index.ts`;
     const output = `${dir}/build/index.js`;
-    const tsconfig = (0, node_fs_1.existsSync)(`${dir}/tsconfig.json`) ? `${dir}/tsconfig.json` : `${__dirname}/../tsapi.json`;
+    const tsconfig = `${dir}/tsconfig.json`;
     try {
         cf.debug && utils_1.log.info(`[ubin]: Building source ${input}`);
         cf.debug && utils_1.log.info(`[ubin]: Building output ${output}`);
-        const type_generator = {
-            name: 'TypeGenerator',
-            setup(build) {
-                cf.types && build.onEnd((result) => {
-                    result.errors.length === 0 && (0, child_process_1.execSync)(`tsc --emitDeclarationOnly --build ${tsconfig} --outDir ${outDir} --baseUrl ${inDir}`);
-                });
-            }
-        };
-        (0, esbuild_1.build)({
+        (0, esbuild_1.buildSync)({
             entryPoints: [input],
             platform: "node",
             tsconfig: tsconfig,
@@ -32,8 +23,8 @@ const build_api = (cf, dir) => {
             minify: true,
             sourcemap: false,
             format: 'cjs',
-            plugins: [type_generator]
         });
+        cf.types && (0, child_process_1.execSync)(`tsc --emitDeclarationOnly --build ${tsconfig} --outDir ${outDir} --baseUrl ${inDir}`);
         cf.debug && utils_1.log.info(`[ubin]: Building completed`);
     }
     catch (err) {
