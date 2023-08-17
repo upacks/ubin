@@ -3,28 +3,7 @@
 import { log } from 'utils'
 import { existsSync } from 'node:fs'
 import { buildSync } from 'esbuild'
-import * as ts from "typescript"
-
-const compile = (fileNames: string[], options: ts.CompilerOptions): void => {
-    // Create a Program with an in-memory emit
-    const createdFiles = {}
-    const host = ts.createCompilerHost(options);
-    host.writeFile = (fileName: string, contents: string) => createdFiles[fileName] = contents
-
-    // Prepare and emit the d.ts files
-    const program = ts.createProgram(fileNames, options, host);
-    program.emit();
-
-    // Loop through all the input files
-    fileNames.forEach(file => {
-        console.log("### JavaScript\n")
-        console.log(host.readFile(file))
-
-        console.log("### Type Definition\n")
-        const dts = file.replace(".js", ".d.ts")
-        console.log(createdFiles[dts])
-    })
-}
+import { execSync } from 'child_process'
 
 export const build_api = (cf: any, dir: string) => {
 
@@ -37,6 +16,15 @@ export const build_api = (cf: any, dir: string) => {
         cf.debug && log.info(`[ubin]: Building source ${input}`)
         cf.debug && log.info(`[ubin]: Building output ${output}`)
 
+        const type_generator = {
+            name: 'TypeGenerator',
+            setup(build) {
+                cf.types && build.onEnd((result) => {
+                    result.errors.length === 0 && execSync(`tsc --emitDeclarationOnly --build ${tsconfig} `)
+                })
+            }
+        }
+
         buildSync({
             entryPoints: [input],
             platform: "node",
@@ -46,14 +34,8 @@ export const build_api = (cf: any, dir: string) => {
             minify: true,
             sourcemap: false,
             format: 'cjs',
+            plugins: [type_generator]
         })
-
-        // Run the compiler
-        compile(process.argv.slice(2), {
-            allowJs: true,
-            declaration: true,
-            emitDeclarationOnly: true,
-        });
 
         cf.debug && log.info(`[ubin]: Building completed`)
 
