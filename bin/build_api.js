@@ -17,12 +17,12 @@ const build_api = (cf, dir) => {
             entryPoints: [input],
             platform: "node",
             outfile: output,
-            bundle: true,
+            bundle: cf.bundle,
             minify: true,
             sourcemap: false,
             format: 'cjs',
         });
-        cf.types && (0, child_process_1.execSync)(`tsc --emitDeclarationOnly --declaration --outDir ${outDir} --baseUrl ${inDir}`);
+        cf.types && (0, child_process_1.execSync)(`tsc --emitDeclarationOnly --declaration --comments --outDir ${outDir} --baseUrl ${inDir}`);
         cf.debug && utils_1.log.info(`[ubin]: Building completed`);
     }
     catch (err) {

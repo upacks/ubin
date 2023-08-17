@@ -15,6 +15,7 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
     const cf = {
         debug: false,
         types: false,
+        bundle: false,
     };
     if (pkg && pkg.name && pkg.version) {
         if (args.includes('--debug'))
@@ -23,6 +24,8 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
             cf.debug = false;
         if (args.includes('--types'))
             cf.types = true;
+        if (args.includes('--bundle'))
+            cf.bundle = true;
         if (args.includes('build_app')) {
             cf.debug && utils_1.log.info(`[ubin]: Building app.${pkg.name}`);
         }

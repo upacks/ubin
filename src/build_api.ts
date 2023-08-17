@@ -20,13 +20,13 @@ export const build_api = (cf: any, dir: string) => {
             entryPoints: [input],
             platform: "node",
             outfile: output,
-            bundle: true,
+            bundle: cf.bundle,
             minify: true,
             sourcemap: false,
             format: 'cjs',
         })
 
-        cf.types && execSync(`tsc --emitDeclarationOnly --declaration --outDir ${outDir} --baseUrl ${inDir}`)
+        cf.types && execSync(`tsc --emitDeclarationOnly --declaration --comments --outDir ${outDir} --baseUrl ${inDir}`)
 
         cf.debug && log.info(`[ubin]: Building completed`)
 
