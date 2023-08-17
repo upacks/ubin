@@ -10,7 +10,7 @@
       "declaration": true,
       "declarationMap": true,
       "sourceMap": true,
-      "outDir": "dist",
+      "outDir": "bin",
       "baseUrl": "./src",
       "typeRoots": [
          "./node_modules/@types"

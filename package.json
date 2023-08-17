@@ -5,26 +5,27 @@
   "author": "gantulga.khuyag@gmail.com",
   "license": "MIT",
   "type": "commonjs",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "ts-module": "./dist/index.ts",
+  "bin": {
+    "ubin": "./bin/ubin.js"
+  },
+  "main": "./bin/ubin.js",
+  "types": "./bin/ubin.d.ts",
+  "ts-module": "./bin/ubin.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "ts-import": "./src/index.ts"
+      "import": "./bin/ubin.js",
+      "require": "./bin/ubin.js",
+      "ts-import": "./bin/ubin.ts"
     }
   },
   "scripts": {
-    "start": "nodemon --delay 0.25 ./src/index.ts",
+    "start": "nodemon --delay 0.25 ./src/ubin.ts",
     "build": "tsc -p tsconfig.json"
   },
-  "dependencies": {
-    "blocked": "^1.3.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/node": "^18.11.18",
-    "nodemon": "^2.0.15",
-    "typescript": "^4.5.2"
+    "@types/node": "^20.5.0",
+    "nodemon": "^3.0.1",
+    "typescript": "^5.1.6"
   }
 }
