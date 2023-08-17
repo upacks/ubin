@@ -1,10 +1,50 @@
 #!/usr/bin/env node
 
-const fs = require('fs')
+import { log } from 'utils'
+import { readFileSync, existsSync } from 'node:fs'
+import { build_api } from './build_api'
 
-console.log(process.argv)
-console.log(__dirname)
+const args: string[] = process.argv
+const dir: string = __dirname + '/../../..'
 
-const pkg = JSON.parse(fs.readFileSync(__dirname + '/../package.json'))
+if (existsSync(`${dir}/package.json`)) {
 
-console.log(pkg)
+    const pkg: any = JSON.parse(String(readFileSync(`${dir}/package.json`) ?? ""))
+
+    const cf = {
+        debug: false,
+    }
+
+    if (pkg && pkg.name && pkg.version) {
+
+        if (args.includes('--debug')) cf.debug = true
+        if (args.includes('--silent')) cf.debug = false
+
+        if (args.includes('build_app')) {
+            cf.debug && log.info(`[ubin]: Building app.${pkg.name}`)
+        }
+
+        if (args.includes('build_api')) {
+            cf.debug && log.info(`[ubin]: Building api.${pkg.name}`)
+            build_api(cf, dir)
+        }
+
+        if (args.includes('serve_app')) {
+            cf.debug && log.info(`[ubin]: Serving app.${pkg.name}`)
+        }
+
+        if (args.includes('build_api')) {
+            cf.debug && log.info(`[ubin]: Serving api.${pkg.name}`)
+        }
+
+    } else {
+
+        log.warn(`[ubin]: Could not get package name!`)
+
+    }
+
+} else {
+
+    log.warn(`[ubin]: Use it as a dependency!`)
+
+}

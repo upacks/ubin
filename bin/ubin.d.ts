@@ -1,4 +1,3 @@
 #!/usr/bin/env node
-declare const fs: any;
-declare const pkg: any;
+export {};
 //# sourceMappingURL=ubin.d.ts.map
