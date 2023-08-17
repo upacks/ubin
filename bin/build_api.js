@@ -23,7 +23,7 @@ const build_api = (cf, dir) => {
                 });
             }
         };
-        (0, esbuild_1.buildSync)({
+        (0, esbuild_1.build)({
             entryPoints: [input],
             platform: "node",
             tsconfig: tsconfig,

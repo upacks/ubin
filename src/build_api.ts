@@ -2,7 +2,7 @@
 
 import { log } from 'utils'
 import { existsSync } from 'node:fs'
-import { buildSync } from 'esbuild'
+import { buildSync, build } from 'esbuild'
 import { execSync } from 'child_process'
 
 export const build_api = (cf: any, dir: string) => {
@@ -27,7 +27,7 @@ export const build_api = (cf: any, dir: string) => {
             }
         }
 
-        buildSync({
+        build({
             entryPoints: [input],
             platform: "node",
             tsconfig: tsconfig,
