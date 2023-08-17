@@ -10,12 +10,15 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
     const pkg = JSON.parse(String((0, node_fs_1.readFileSync)(`${dir}/package.json`) ?? ""));
     const cf = {
         debug: false,
+        types: false,
     };
     if (pkg && pkg.name && pkg.version) {
         if (args.includes('--debug'))
             cf.debug = true;
         if (args.includes('--silent'))
             cf.debug = false;
+        if (args.includes('--types'))
+            cf.types = true;
         if (args.includes('build_app')) {
             cf.debug && utils_1.log.info(`[ubin]: Building app.${pkg.name}`);
         }
