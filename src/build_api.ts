@@ -17,6 +17,7 @@ export const build_api = (cf) => {
 
         buildSync({
             entryPoints: [input],
+            logLevel: 'info',
             platform: "node",
             sourcemap: false,
             outfile: output,
