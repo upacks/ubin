@@ -5,6 +5,7 @@ import { log } from 'utils'
 
 import { watch_api } from './watch_api'
 import { build_api } from './build_api'
+import { serve_api } from './serve_api'
 
 const args: string[] = process.argv
 const dir: string = process.cwd()
@@ -53,6 +54,7 @@ if (existsSync(`${dir}/package.json`)) {
 
         if (args.includes('build_api')) {
             cf.debug && log.info(`[ubin]: Serving api.${pkg.name}`)
+            serve_api(cf)
         }
 
     } else {

@@ -16,7 +16,7 @@ export const watch_api = (cf) => {
     try {
 
         const { dir, debug, bundle } = cf
-        debug && log.info(`[ubin]: Watching source ${dir}`)
+        debug && log.info(`[ubin]: Watching source ${dir}/src`)
 
         const onStart = () => {
 
@@ -39,7 +39,7 @@ export const watch_api = (cf) => {
                 `${dir}/dist`,
             ],
             "ext": "ts,tsx,js,jsx,mjs,json",
-            "exec": "echo \"\"",
+            "exec": "echo ***",
             "legacyWatch": true,
         })
             .on('start', onStart)

@@ -17,7 +17,7 @@ const serve_api_1 = require("./serve_api");
 const watch_api = (cf) => {
     try {
         const { dir, debug, bundle } = cf;
-        debug && utils_1.log.info(`[ubin]: Watching source ${dir}`);
+        debug && utils_1.log.info(`[ubin]: Watching source ${dir}/src`);
         const onStart = () => {
             try {
                 utils_1.log.info('[watch] start');
@@ -36,7 +36,7 @@ const watch_api = (cf) => {
                 `${dir}/dist`,
             ],
             "ext": "ts,tsx,js,jsx,mjs,json",
-            "exec": "echo \"\"",
+            "exec": "echo ***",
             "legacyWatch": true,
         })
             .on('start', onStart)

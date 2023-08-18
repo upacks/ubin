@@ -5,6 +5,7 @@ const node_fs_1 = require("node:fs");
 const utils_1 = require("utils");
 const watch_api_1 = require("./watch_api");
 const build_api_1 = require("./build_api");
+const serve_api_1 = require("./serve_api");
 const args = process.argv;
 const dir = process.cwd();
 if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
@@ -45,6 +46,7 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
         }
         if (args.includes('build_api')) {
             cf.debug && utils_1.log.info(`[ubin]: Serving api.${pkg.name}`);
+            (0, serve_api_1.serve_api)(cf);
         }
     }
     else {
