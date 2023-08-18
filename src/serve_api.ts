@@ -2,11 +2,11 @@
 
 export const serve_api = (cf) => {
 
-    const { dir, debug, log } = cf
+    const { dir, outDir, debug, log } = cf
 
     try {
 
-        const entry = `${dir}/build/index.js`
+        const entry = `${outDir}/index.js`
 
         debug && log.info(`Source ${entry}`)
 

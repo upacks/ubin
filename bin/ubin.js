@@ -6,6 +6,9 @@ const utils_1 = require("utils");
 const watch_api_1 = require("./watch_api");
 const build_api_1 = require("./build_api");
 const serve_api_1 = require("./serve_api");
+const watch_app_1 = require("./watch_app");
+const build_app_1 = require("./build_app");
+const serve_app_1 = require("./serve_app");
 const args = process.argv;
 const dir = process.cwd();
 if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
@@ -32,9 +35,12 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
             cf.types = true;
         if (args.includes('--bundle'))
             cf.bundle = true;
-        if (args.includes('watch_app')) { } /** ! **/
-        if (args.includes('build_app')) { } /** ! **/
-        if (args.includes('serve_app')) { } /** ! **/
+        if (args.includes('watch_app'))
+            (0, watch_app_1.watch_app)({ ...cf, log: _log('watch_app') });
+        if (args.includes('build_app'))
+            (0, build_app_1.build_app)({ ...cf, log: _log('build_app') });
+        if (args.includes('serve_app'))
+            (0, serve_app_1.serve_app)({ ...cf, log: _log('serve_app') });
         if (args.includes('watch_api'))
             (0, watch_api_1.watch_api)({ ...cf, log: _log('watch_api') });
         if (args.includes('build_api'))

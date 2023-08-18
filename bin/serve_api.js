@@ -3,9 +3,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.serve_api = void 0;
 const serve_api = (cf) => {
-    const { dir, debug, log } = cf;
+    const { dir, outDir, debug, log } = cf;
     try {
-        const entry = `${dir}/build/index.js`;
+        const entry = `${outDir}/index.js`;
         debug && log.info(`Source ${entry}`);
         require(entry);
     }

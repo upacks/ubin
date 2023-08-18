@@ -3,13 +3,13 @@
 import { buildSync } from 'esbuild'
 import { execSync } from 'child_process'
 
-export const build_api = (cf) => {
+export const build_app = (cf) => {
 
     const { dir, debug, outDir, inDir, types, bundle, log } = cf
 
     try {
 
-        const input = `${inDir}/index.ts`
+        const input = `${inDir}/index.tsx`
         const output = `${outDir}/index.js`
 
         debug && log.info(`Source ${input}`)
