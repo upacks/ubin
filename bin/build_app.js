@@ -13,8 +13,8 @@ const build_app = (cf) => {
         debug && log.info(`Output ${output}`);
         (0, esbuild_1.buildSync)({
             entryPoints: [input],
-            logLevel: "debug",
-            platform: "node",
+            ...(debug ? { logLevel: "debug" } : {}),
+            platform: "browser",
             sourcemap: false,
             outfile: output,
             bundle: bundle,

@@ -23,7 +23,7 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
         port: args.indexOf('--port') !== -1 ? Number(args[args.indexOf('--port') + 1]) : 0,
     };
     const _log = (al) => ({
-        info: (t) => utils_1.log.info(`[${al}]: ${t}`),
+        info: (t) => cf.debug && utils_1.log.info(`[${al}]: ${t}`),
         warn: (t) => utils_1.log.warn(`[${al}]: ${t}`),
         error: (t) => utils_1.log.error(`[${al}]: ${t}`),
     });

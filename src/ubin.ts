@@ -29,7 +29,7 @@ if (existsSync(`${dir}/package.json`)) {
     }
 
     const _log = (al: string) => ({
-        info: (t: string) => log.info(`[${al}]: ${t}`),
+        info: (t: string) => cf.debug && log.info(`[${al}]: ${t}`),
         warn: (t: string) => log.warn(`[${al}]: ${t}`),
         error: (t: string) => log.error(`[${al}]: ${t}`),
     })

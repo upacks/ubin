@@ -13,7 +13,7 @@ const build_api = (cf) => {
         debug && log.info(`Output ${output}`);
         (0, esbuild_1.buildSync)({
             entryPoints: [input],
-            logLevel: "debug",
+            ...(debug ? { logLevel: "debug" } : {}),
             platform: "node",
             sourcemap: false,
             outfile: output,
