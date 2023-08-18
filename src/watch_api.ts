@@ -34,14 +34,14 @@ export const watch_api = (cf) => {
         }
 
         nodemon({
-            "watch": [`${dir}/src/*`],
+            "watch": [`${dir}/src/**/*`],
             "ignore": [
                 `${dir}/node_modules`,
                 `${dir}/build`,
                 `${dir}/dist`,
             ],
             "ext": "ts,tsx,js,jsx,mjs,json",
-            "exec": null,
+            "exec": "echo 0",
             "legacyWatch": true,
         })
             .on('start', () => onStart())
