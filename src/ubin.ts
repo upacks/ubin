@@ -25,6 +25,7 @@ if (existsSync(`${dir}/package.json`)) {
         bundle: false,
         inDir: `${dir}/src`,
         outDir: `${dir}/dist`,
+        port: args.indexOf('--port') !== -1 ? Number(args[args.indexOf('--port') + 1]) : 0,
     }
 
     const _log = (al: string) => ({

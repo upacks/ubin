@@ -2,7 +2,7 @@
 
 export const serve_app = (cf) => {
 
-    const { dir, outDir, debug, log } = cf
+    const { dir, outDir, debug, log, port } = cf
 
     try {
 
@@ -15,7 +15,7 @@ export const serve_app = (cf) => {
         app.use(express.static(`${dir}/dist`))
         app.use(express.static(`${dir}/public`))
         app.use((req, res, next) => res.sendFile(`${dir}/public/index.html`))
-        app.listen(5000, () => log.info("Started on port 5000"))
+        const l = app.listen(port, () => log.info(`Started on port ${l.address().port}`))
 
     } catch (err) {
 
