@@ -8,16 +8,14 @@ export const watch_api = (cf) => {
 
     try {
 
-        process.once('SIGUSR2', () => {
-            console.log('SIGUSR2')
-            process.kill(process.pid, 'SIGUSR2')
-        })
-
         const onExit = (code) => {
 
-            debug && log.error('Nodemon event exit')
-            console.log(code)
-            // process.exit(0)
+            if (code && code === 'SIGUSR2') {
+                debug && log.info('Nodemon reload')
+            } else {
+                debug && log.error('Nodemon event exit')
+                process.exit(0)
+            }
 
         }
 
