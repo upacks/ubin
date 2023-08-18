@@ -12,7 +12,7 @@ export const serve_api = (cf) => {
 
         debug && log.info(`[ubin]: Serving source ${entry}`)
 
-        execSync(`node ${entry}`)
+        // execSync(`node ${entry} OMG`)
 
         debug && log.info(`[ubin]: Serving completed`)
 

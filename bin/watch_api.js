@@ -36,7 +36,7 @@ const watch_api = (cf) => {
                 `dist`,
             ],
             "ext": "ts,tsx,js,jsx,mjs,json",
-            "exec": "echo 1"
+            "exec": "echo 2"
         })
             .on('start', () => onStart())
             .on('crash', () => utils_1.log.warn('[watch] crush'))
