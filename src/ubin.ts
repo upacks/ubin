@@ -24,9 +24,9 @@ if (existsSync(`${dir}/package.json`)) {
     }
 
     const _log = (al: string) => ({
-        info: (t: string) => log.info(`[${t}]: ${t}`),
-        warn: (t: string) => log.warn(`[${t}]: ${t}`),
-        error: (t: string) => log.error(`[${t}]: ${t}`),
+        info: (t: string) => log.info(`[${al}]: ${t}`),
+        warn: (t: string) => log.warn(`[${al}]: ${t}`),
+        error: (t: string) => log.error(`[${al}]: ${t}`),
     })
 
     if (pkg && pkg.name && pkg.version) {

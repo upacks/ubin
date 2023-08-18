@@ -8,6 +8,11 @@ export const watch_api = (cf) => {
 
     try {
 
+        const onExit = () => {
+            debug && log.error('Nodemon event exit')
+            process.exit(0)
+        }
+
         nodemon({
             "watch": [`${dir}/src`],
             "ignore": [
@@ -20,7 +25,7 @@ export const watch_api = (cf) => {
         })
             .on('start', () => debug && log.info('Nodemon event start'))
             .on('crash', () => debug && log.warn('Nodemon event crush'))
-            .on('exit', () => debug && log.error('Nodemon event exit'))
+            .on('exit', onExit)
 
     } catch (err) {
 

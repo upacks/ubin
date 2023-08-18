@@ -19,9 +19,9 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
         outDir: `${dir}/dist`,
     };
     const _log = (al) => ({
-        info: (t) => utils_1.log.info(`[${t}]: ${t}`),
-        warn: (t) => utils_1.log.warn(`[${t}]: ${t}`),
-        error: (t) => utils_1.log.error(`[${t}]: ${t}`),
+        info: (t) => utils_1.log.info(`[${al}]: ${t}`),
+        warn: (t) => utils_1.log.warn(`[${al}]: ${t}`),
+        error: (t) => utils_1.log.error(`[${al}]: ${t}`),
     });
     if (pkg && pkg.name && pkg.version) {
         if (args.includes('--debug'))

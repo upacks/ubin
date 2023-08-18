@@ -14,10 +14,10 @@ const build_api = (cf) => {
         (0, esbuild_1.buildSync)({
             entryPoints: [input],
             platform: "node",
+            sourcemap: false,
             outfile: output,
             bundle: bundle,
             minify: true,
-            sourcemap: false,
             format: 'cjs',
         });
         types && (0, child_process_1.execSync)(`tsc --declaration --emitDeclarationOnly --outDir ${outDir} --baseUrl ${inDir}`);

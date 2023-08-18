@@ -9,6 +9,10 @@ const nodemon_1 = __importDefault(require("nodemon"));
 const watch_api = (cf) => {
     const { dir, debug, log } = cf;
     try {
+        const onExit = () => {
+            debug && log.error('Nodemon event exit');
+            process.exit(0);
+        };
         (0, nodemon_1.default)({
             "watch": [`${dir}/src`],
             "ignore": [
@@ -21,7 +25,7 @@ const watch_api = (cf) => {
         })
             .on('start', () => debug && log.info('Nodemon event start'))
             .on('crash', () => debug && log.warn('Nodemon event crush'))
-            .on('exit', () => debug && log.error('Nodemon event exit'));
+            .on('exit', onExit);
     }
     catch (err) {
         log.warn(err.message);

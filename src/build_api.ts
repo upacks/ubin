@@ -18,10 +18,10 @@ export const build_api = (cf) => {
         buildSync({
             entryPoints: [input],
             platform: "node",
+            sourcemap: false,
             outfile: output,
             bundle: bundle,
             minify: true,
-            sourcemap: false,
             format: 'cjs',
         })
 
