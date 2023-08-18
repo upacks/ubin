@@ -22,21 +22,21 @@ const watch_api = (cf) => {
             try {
                 (0, build_api_1.build_api)(cf);
                 (0, serve_api_1.serve_api)(cf);
-                utils_1.log.error(`[ubin]: Watching [:)]`);
+                utils_1.log.warn(`[ubin]: Watching [:)]`);
             }
             catch (err) {
                 utils_1.log.error(`[ubin]: ${err.message}`);
             }
         };
         (0, nodemon_1.default)({
-            "watch": [`src`],
+            "watch": [`${dir}/src`],
             "ignore": [
-                `node_modules`,
-                `build`,
-                `dist`,
+                `${dir}/node_modules`,
+                `${dir}/build`,
+                `${dir}/dist`,
             ],
             "ext": "ts,tsx,js,jsx,mjs,json",
-            "exec": "echo 2"
+            "exec": "echo \"\""
         })
             .on('start', () => onStart())
             .on('crash', () => utils_1.log.warn('[watch] crush'))

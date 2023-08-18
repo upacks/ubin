@@ -25,7 +25,7 @@ export const watch_api = (cf) => {
                 build_api(cf)
                 serve_api(cf)
 
-                log.error(`[ubin]: Watching [:)]`)
+                log.warn(`[ubin]: Watching [:)]`)
 
             } catch (err) {
                 log.error(`[ubin]: ${err.message}`)
@@ -34,14 +34,14 @@ export const watch_api = (cf) => {
         }
 
         nodemon({
-            "watch": [`src`],
+            "watch": [`${dir}/src`],
             "ignore": [
-                `node_modules`,
-                `build`,
-                `dist`,
+                `${dir}/node_modules`,
+                `${dir}/build`,
+                `${dir}/dist`,
             ],
             "ext": "ts,tsx,js,jsx,mjs,json",
-            "exec": "echo 2"
+            "exec": "echo \"\""
         })
             .on('start', () => onStart())
             .on('crash', () => log.warn('[watch] crush'))
