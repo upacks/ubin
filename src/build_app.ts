@@ -5,15 +5,14 @@ import { execSync } from 'child_process'
 
 export const build_app = (cf) => {
 
-    const { dir, debug, outDir, inDir, types, bundle, log } = cf
+    const { debug, outDir, inDir, types, bundle, log } = cf
 
     try {
 
         const input = `${inDir}/index.tsx`
         const output = `${outDir}/index.js`
 
-        debug && log.info(`Source ${input}`)
-        debug && log.info(`Output ${output}`)
+        const startTime = performance.now()
 
         buildSync({
             entryPoints: [input],
@@ -25,6 +24,10 @@ export const build_app = (cf) => {
             minify: true,
             format: 'cjs',
         })
+
+        const endTime = performance.now()
+
+        debug && log.info(`Built in ${endTime - startTime} milliseconds`)
 
         types && execSync(`tsc --declaration --emitDeclarationOnly --outDir ${outDir} --baseUrl ${inDir}`)
 

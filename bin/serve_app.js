@@ -9,11 +9,6 @@ const serve_app = (cf) => {
         debug && log.info(`Source ${entry}`);
         const express = require("express");
         const app = express();
-        const livereload = require("livereload");
-        const liveReloadServer = livereload.createServer();
-        liveReloadServer.watch(`${dir}/dist`);
-        const connectLivereload = require("connect-livereload");
-        app.use(connectLivereload());
         app.use(express.static(`${dir}/dist`));
         app.use(express.static(`${dir}/public`));
         app.use((req, res, next) => res.sendFile(`${dir}/public/index.html`));
