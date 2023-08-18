@@ -36,11 +36,11 @@ const watch_api = (cf) => {
                 `${dir}/dist`,
             ],
             "ext": "ts,tsx,js,jsx,mjs,json",
-            "exec": "echo \"\""
+            "exec": "yarn build && yarn serve"
         })
-            .on('start', () => onStart())
+            .on('start', () => utils_1.log.info('[watch] start'))
             .on('crash', () => utils_1.log.warn('[watch] crush'))
-            .on('exit', () => utils_1.log.warn('[watch] exit'));
+            .on('exit', () => utils_1.log.error('[watch] exit'));
         debug && utils_1.log.info(`[ubin]: Watching completed`);
     }
     catch (err) {
