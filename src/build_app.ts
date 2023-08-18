@@ -16,7 +16,7 @@ export const build_app = (cf) => {
 
         buildSync({
             entryPoints: [input],
-            ...(debug ? { logLevel: "info" } : {}),
+            // ...(debug ? { logLevel: "info" } : {}),
             platform: "browser",
             sourcemap: false,
             outfile: output,
@@ -27,7 +27,7 @@ export const build_app = (cf) => {
 
         const endTime = performance.now()
 
-        debug && log.info(`Built in ${endTime - startTime} milliseconds`)
+        debug && log.info(`Build in ${((endTime - startTime) / 1000).toFixed(2)}s`)
 
         types && execSync(`tsc --declaration --emitDeclarationOnly --outDir ${outDir} --baseUrl ${inDir}`)
 

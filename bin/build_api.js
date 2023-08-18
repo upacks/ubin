@@ -12,7 +12,7 @@ const build_api = (cf) => {
         const startTime = performance.now();
         (0, esbuild_1.buildSync)({
             entryPoints: [input],
-            ...(debug ? { logLevel: "info" } : {}),
+            // ...(debug ? { logLevel: "info" } : {}),
             platform: "node",
             sourcemap: false,
             outfile: output,
@@ -21,7 +21,7 @@ const build_api = (cf) => {
             format: 'cjs',
         });
         const endTime = performance.now();
-        debug && log.info(`Built in ${endTime - startTime} milliseconds`);
+        debug && log.info(`Build in ${((endTime - startTime) / 1000).toFixed(2)}s`);
         types && (0, child_process_1.execSync)(`tsc --declaration --emitDeclarationOnly --outDir ${outDir} --baseUrl ${inDir}`);
     }
     catch (err) {
