@@ -17,12 +17,12 @@ const serve_api_1 = require("./serve_api");
 const watch_api = (cf) => {
     try {
         const { dir, debug, bundle } = cf;
-        debug && utils_1.log.info(`[ubin]: Watching source ${dir}/src`);
+        debug && utils_1.log.info(`[ubin]: Watching started ${dir}/src`);
         const onStart = () => {
             try {
-                utils_1.log.info('[watch] start');
                 (0, build_api_1.build_api)(cf);
                 (0, serve_api_1.serve_api)(cf);
+                utils_1.log.error(`[ubin]: Watching [:)]`);
             }
             catch (err) {
                 utils_1.log.error(`[ubin]: ${err.message}`);
@@ -36,16 +36,16 @@ const watch_api = (cf) => {
                 `${dir}/dist`,
             ],
             "ext": "ts,tsx,js,jsx,mjs,json",
-            "exec": "echo ***",
+            "exec": "echo :)",
             "legacyWatch": true,
         })
-            .on('start', onStart)
+            .on('start', () => onStart())
             .on('crash', () => utils_1.log.warn('[watch] crush'))
             .on('exit', () => utils_1.log.warn('[watch] exit'));
-        debug && utils_1.log.info(`[ubin]: Building completed`);
+        debug && utils_1.log.info(`[ubin]: Watching completed`);
     }
     catch (err) {
-        utils_1.log.warn(`[ubin]: Building failed / ${err.message}`);
+        utils_1.log.warn(`[ubin]: Watching failed / ${err.message}`);
     }
 };
 exports.watch_api = watch_api;

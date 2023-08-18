@@ -16,19 +16,21 @@ export const watch_api = (cf) => {
     try {
 
         const { dir, debug, bundle } = cf
-        debug && log.info(`[ubin]: Watching source ${dir}/src`)
+        debug && log.info(`[ubin]: Watching started ${dir}/src`)
 
         const onStart = () => {
 
             try {
 
-                log.info('[watch] start')
                 build_api(cf)
                 serve_api(cf)
+
+                log.error(`[ubin]: Watching [:)]`)
 
             } catch (err) {
                 log.error(`[ubin]: ${err.message}`)
             }
+
         }
 
         nodemon({
@@ -39,18 +41,18 @@ export const watch_api = (cf) => {
                 `${dir}/dist`,
             ],
             "ext": "ts,tsx,js,jsx,mjs,json",
-            "exec": "echo ***",
+            "exec": "echo :)",
             "legacyWatch": true,
         })
-            .on('start', onStart)
+            .on('start', () => onStart())
             .on('crash', () => log.warn('[watch] crush'))
             .on('exit', () => log.warn('[watch] exit'))
 
-        debug && log.info(`[ubin]: Building completed`)
+        debug && log.info(`[ubin]: Watching completed`)
 
     } catch (err) {
 
-        log.warn(`[ubin]: Building failed / ${err.message}`)
+        log.warn(`[ubin]: Watching failed / ${err.message}`)
 
     }
 
