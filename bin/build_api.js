@@ -12,7 +12,7 @@ const build_api = (cf) => {
         const startTime = performance.now();
         (0, esbuild_1.buildSync)({
             entryPoints: [input],
-            ...(debug ? { logLevel: "debug" } : {}),
+            ...(debug ? { logLevel: "info" } : {}),
             platform: "node",
             sourcemap: false,
             outfile: output,

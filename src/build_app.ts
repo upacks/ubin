@@ -16,7 +16,7 @@ export const build_app = (cf) => {
 
         buildSync({
             entryPoints: [input],
-            ...(debug ? { logLevel: "debug" } : {}),
+            ...(debug ? { logLevel: "info" } : {}),
             platform: "browser",
             sourcemap: false,
             outfile: output,
