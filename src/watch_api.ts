@@ -8,9 +8,17 @@ export const watch_api = (cf) => {
 
     try {
 
-        const onExit = () => {
+        process.once('SIGUSR2', () => {
+            console.log('SIGUSR2')
+            process.kill(process.pid, 'SIGUSR2')
+        })
+
+        const onExit = (code) => {
+
             debug && log.error('Nodemon event exit')
-            process.exit(0)
+            console.log(code)
+            // process.exit(0)
+
         }
 
         nodemon({

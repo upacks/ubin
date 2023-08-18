@@ -9,9 +9,14 @@ const nodemon_1 = __importDefault(require("nodemon"));
 const watch_api = (cf) => {
     const { dir, debug, log } = cf;
     try {
-        const onExit = () => {
+        process.once('SIGUSR2', () => {
+            console.log('SIGUSR2');
+            process.kill(process.pid, 'SIGUSR2');
+        });
+        const onExit = (code) => {
             debug && log.error('Nodemon event exit');
-            process.exit(0);
+            console.log(code);
+            // process.exit(0)
         };
         (0, nodemon_1.default)({
             "watch": [`${dir}/src`],
