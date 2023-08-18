@@ -13,9 +13,9 @@ export const serve_app = (cf) => {
         const express = require("express")
         const app = express()
 
-        /* const livereload = require("livereload")
+        const livereload = require("livereload")
         const liveReloadServer = livereload.createServer()
-        liveReloadServer.watch(`${dir}/dist`) */
+        liveReloadServer.watch(`${dir}/dist`)
 
         const connectLivereload = require("connect-livereload")
         app.use(connectLivereload())
