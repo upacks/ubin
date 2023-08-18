@@ -1,37 +1,12 @@
 #!/usr/bin/env node
 
-import { log } from 'utils'
 import nodemon from 'nodemon'
-import { build_api } from './build_api'
-import { serve_api } from './serve_api'
-
-/**
- * ubin --watch
- * ubin --build
- * ubin --serve
- */
 
 export const watch_api = (cf) => {
 
+    const { dir, debug, log } = cf
+
     try {
-
-        const { dir, debug, bundle } = cf
-        debug && log.info(`[ubin]: Watching started ${dir}/src`)
-
-        const onStart = () => {
-
-            try {
-
-                build_api(cf)
-                serve_api(cf)
-
-                log.warn(`[ubin]: Watching [:)]`)
-
-            } catch (err) {
-                log.error(`[ubin]: ${err.message}`)
-            }
-
-        }
 
         nodemon({
             "watch": [`${dir}/src`],
@@ -43,15 +18,13 @@ export const watch_api = (cf) => {
             "ext": "ts,tsx,js,jsx,mjs,json",
             "exec": "yarn build && yarn serve"
         })
-            .on('start', () => log.info('[watch] start'))
-            .on('crash', () => log.warn('[watch] crush'))
-            .on('exit', () => log.error('[watch] exit'))
-
-        debug && log.info(`[ubin]: Watching completed`)
+            .on('start', () => debug && log.info('Nodemon event start'))
+            .on('crash', () => debug && log.warn('Nodemon event crush'))
+            .on('exit', () => debug && log.error('Nodemon event exit'))
 
     } catch (err) {
 
-        log.warn(`[ubin]: Watching failed / ${err.message}`)
+        log.warn(err.message)
 
     }
 

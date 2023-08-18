@@ -16,8 +16,13 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
         types: false,
         bundle: false,
         inDir: `${dir}/src`,
-        outDir: `${dir}/build`,
+        outDir: `${dir}/dist`,
     };
+    const _log = (al) => ({
+        info: (t) => utils_1.log.info(`[${t}]: ${t}`),
+        warn: (t) => utils_1.log.warn(`[${t}]: ${t}`),
+        error: (t) => utils_1.log.error(`[${t}]: ${t}`),
+    });
     if (pkg && pkg.name && pkg.version) {
         if (args.includes('--debug'))
             cf.debug = true;
@@ -27,27 +32,15 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
             cf.types = true;
         if (args.includes('--bundle'))
             cf.bundle = true;
-        if (args.includes('dev_app')) {
-            cf.debug && utils_1.log.info(`[ubin]: Watching app.${pkg.name}`);
-        }
-        if (args.includes('dev_api')) {
-            cf.debug && utils_1.log.info(`[ubin]: Watching api.${pkg.name}`);
-            (0, watch_api_1.watch_api)(cf);
-        }
-        if (args.includes('build_app')) {
-            cf.debug && utils_1.log.info(`[ubin]: Building app.${pkg.name}`);
-        }
-        if (args.includes('build_api')) {
-            cf.debug && utils_1.log.info(`[ubin]: Building api.${pkg.name}`);
-            (0, build_api_1.build_api)(cf);
-        }
-        if (args.includes('serve_app')) {
-            cf.debug && utils_1.log.info(`[ubin]: Serving app.${pkg.name}`);
-        }
-        if (args.includes('build_api')) {
-            cf.debug && utils_1.log.info(`[ubin]: Serving api.${pkg.name}`);
-            (0, serve_api_1.serve_api)(cf);
-        }
+        if (args.includes('watch_app')) { } /** ! **/
+        if (args.includes('build_app')) { } /** ! **/
+        if (args.includes('serve_app')) { } /** ! **/
+        if (args.includes('watch_api'))
+            (0, watch_api_1.watch_api)({ ...cf, log: _log('watch_api') });
+        if (args.includes('build_api'))
+            (0, build_api_1.build_api)({ ...cf, log: _log('build_api') });
+        if (args.includes('serve_api'))
+            (0, serve_api_1.serve_api)({ ...cf, log: _log('serve_api') });
     }
     else {
         utils_1.log.warn(`[ubin]: Could not get package name!`);

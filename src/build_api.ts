@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 
-import { log } from 'utils'
 import { buildSync } from 'esbuild'
 import { execSync } from 'child_process'
 
 export const build_api = (cf) => {
 
+    const { dir, debug, outDir, inDir, types, bundle, log } = cf
+
     try {
 
-        const { dir, debug, outDir, inDir, types, bundle } = cf
         const input = `${dir}/src/index.ts`
         const output = `${dir}/build/index.js`
 
-        debug && log.info(`[ubin]: Building source ${input}`)
-        debug && log.info(`[ubin]: Building output ${output}`)
+        debug && log.info(`Source ${input}`)
+        debug && log.info(`Output ${output}`)
 
         buildSync({
             entryPoints: [input],
@@ -27,11 +27,9 @@ export const build_api = (cf) => {
 
         types && execSync(`tsc --declaration --emitDeclarationOnly --outDir ${outDir} --baseUrl ${inDir}`)
 
-        debug && log.info(`[ubin]: Building completed`)
-
     } catch (err) {
 
-        log.warn(`[ubin]: Building failed / ${err.message}`)
+        log.warn(err.message)
 
     }
 

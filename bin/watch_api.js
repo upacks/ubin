@@ -5,29 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.watch_api = void 0;
-const utils_1 = require("utils");
 const nodemon_1 = __importDefault(require("nodemon"));
-const build_api_1 = require("./build_api");
-const serve_api_1 = require("./serve_api");
-/**
- * ubin --watch
- * ubin --build
- * ubin --serve
- */
 const watch_api = (cf) => {
+    const { dir, debug, log } = cf;
     try {
-        const { dir, debug, bundle } = cf;
-        debug && utils_1.log.info(`[ubin]: Watching started ${dir}/src`);
-        const onStart = () => {
-            try {
-                (0, build_api_1.build_api)(cf);
-                (0, serve_api_1.serve_api)(cf);
-                utils_1.log.warn(`[ubin]: Watching [:)]`);
-            }
-            catch (err) {
-                utils_1.log.error(`[ubin]: ${err.message}`);
-            }
-        };
         (0, nodemon_1.default)({
             "watch": [`${dir}/src`],
             "ignore": [
@@ -38,13 +19,12 @@ const watch_api = (cf) => {
             "ext": "ts,tsx,js,jsx,mjs,json",
             "exec": "yarn build && yarn serve"
         })
-            .on('start', () => utils_1.log.info('[watch] start'))
-            .on('crash', () => utils_1.log.warn('[watch] crush'))
-            .on('exit', () => utils_1.log.error('[watch] exit'));
-        debug && utils_1.log.info(`[ubin]: Watching completed`);
+            .on('start', () => debug && log.info('Nodemon event start'))
+            .on('crash', () => debug && log.warn('Nodemon event crush'))
+            .on('exit', () => debug && log.error('Nodemon event exit'));
     }
     catch (err) {
-        utils_1.log.warn(`[ubin]: Watching failed / ${err.message}`);
+        log.warn(err.message);
     }
 };
 exports.watch_api = watch_api;
