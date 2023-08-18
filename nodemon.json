@@ -4,9 +4,12 @@
     ],
     "ignore": [
         "src/**/*.test.ts",
-        "node_modules"
+        "node_modules",
+        "build",
+        "dist",
+        "bin"
     ],
-    "ext": "ts,mjs,js,json,graphql",
+    "ext": "ts,tsx,js,jsx,mjs,json",
     "exec": "yarn build && yarn start",
     "legacyWatch": true
 }

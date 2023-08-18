@@ -1,23 +1,21 @@
 #!/usr/bin/env node
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const path_1 = __importDefault(require("path"));
 const node_fs_1 = require("node:fs");
 const utils_1 = require("utils");
+const watch_api_1 = require("./watch_api");
 const build_api_1 = require("./build_api");
 const args = process.argv;
-const dir = path_1.default.join(__dirname, '..', '..', '..');
-utils_1.log.info(`DIR: ${dir}`);
-utils_1.log.info(`PWD: ${process.cwd()}`);
+const dir = process.cwd();
 if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
     const pkg = JSON.parse(String((0, node_fs_1.readFileSync)(`${dir}/package.json`) ?? ""));
     const cf = {
+        dir: dir,
         debug: false,
         types: false,
         bundle: false,
+        inDir: `${dir}/src`,
+        outDir: `${dir}/build`,
     };
     if (pkg && pkg.name && pkg.version) {
         if (args.includes('--debug'))
@@ -28,12 +26,19 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
             cf.types = true;
         if (args.includes('--bundle'))
             cf.bundle = true;
+        if (args.includes('dev_app')) {
+            cf.debug && utils_1.log.info(`[ubin]: Watching app.${pkg.name}`);
+        }
+        if (args.includes('dev_api')) {
+            cf.debug && utils_1.log.info(`[ubin]: Watching api.${pkg.name}`);
+            (0, watch_api_1.watch_api)(cf);
+        }
         if (args.includes('build_app')) {
             cf.debug && utils_1.log.info(`[ubin]: Building app.${pkg.name}`);
         }
         if (args.includes('build_api')) {
             cf.debug && utils_1.log.info(`[ubin]: Building api.${pkg.name}`);
-            (0, build_api_1.build_api)(cf, dir);
+            (0, build_api_1.build_api)(cf);
         }
         if (args.includes('serve_app')) {
             cf.debug && utils_1.log.info(`[ubin]: Serving app.${pkg.name}`);
