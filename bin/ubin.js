@@ -10,6 +10,8 @@ const utils_1 = require("utils");
 const build_api_1 = require("./build_api");
 const args = process.argv;
 const dir = path_1.default.join(__dirname, '..', '..', '..');
+utils_1.log.info(`DIR: ${dir}`);
+utils_1.log.info(`PWD: ${process.cwd()}`);
 if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
     const pkg = JSON.parse(String((0, node_fs_1.readFileSync)(`${dir}/package.json`) ?? ""));
     const cf = {

@@ -22,11 +22,11 @@ const build_api = (cf, dir) => {
             sourcemap: false,
             format: 'cjs',
         });
-        cf.types && (0, child_process_1.execSync)(`tsc --emitDeclarationOnly --declaration --outDir ${outDir} --baseUrl ${inDir}`);
+        cf.types && (0, child_process_1.execSync)(`tsc --emitDeclarationOnly --moduleDetection --outDir ${outDir} --baseUrl ${inDir}`);
         cf.debug && utils_1.log.info(`[ubin]: Building completed`);
     }
     catch (err) {
-        cf.debug && utils_1.log.warn(`[ubin]: Building failed / ${err.message}`);
+        utils_1.log.warn(`[ubin]: Building failed / ${err.message}`);
     }
 };
 exports.build_api = build_api;

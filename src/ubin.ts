@@ -8,6 +8,9 @@ import { build_api } from './build_api'
 const args: string[] = process.argv
 const dir: string = path.join(__dirname, '..', '..', '..')
 
+log.info(`DIR: ${dir}`)
+log.info(`PWD: ${process.cwd()}`)
+
 if (existsSync(`${dir}/package.json`)) {
 
     const pkg: any = JSON.parse(String(readFileSync(`${dir}/package.json`) ?? ""))

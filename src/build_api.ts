@@ -26,13 +26,13 @@ export const build_api = (cf: any, dir: string) => {
             format: 'cjs',
         })
 
-        cf.types && execSync(`tsc --emitDeclarationOnly --moduleDetection force --outDir ${outDir} --baseUrl ${inDir}`)
+        cf.types && execSync(`tsc --emitDeclarationOnly --moduleDetection --outDir ${outDir} --baseUrl ${inDir}`)
 
         cf.debug && log.info(`[ubin]: Building completed`)
 
     } catch (err) {
 
-        cf.debug && log.warn(`[ubin]: Building failed / ${err.message}`)
+        log.warn(`[ubin]: Building failed / ${err.message}`)
 
     }
 
