@@ -34,11 +34,11 @@ export const watch_api = (cf) => {
         }
 
         nodemon({
-            "watch": [`${dir}/src/**/*`],
+            "watch": [`src`],
             "ignore": [
-                `${dir}/node_modules`,
-                `${dir}/build`,
-                `${dir}/dist`,
+                `node_modules`,
+                `build`,
+                `dist`,
             ],
             "ext": "ts,tsx,js,jsx,mjs,json",
             "exec": "echo 0",
