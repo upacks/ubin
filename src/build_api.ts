@@ -2,10 +2,11 @@
 
 import { buildSync } from 'esbuild'
 import { execSync } from 'child_process'
+import { writeFileSync, existsSync } from 'node:fs'
 
 export const build_api = (cf) => {
 
-    const { debug, outDir, inDir, types, bundle, log } = cf
+    const { dir, debug, outDir, inDir, types, bundle, log } = cf
 
     try {
 
@@ -24,6 +25,10 @@ export const build_api = (cf) => {
             minify: true,
             format: 'cjs',
         })
+
+        !existsSync(`${dir}/dist/run.js`) && writeFileSync(`${dir}/dist/run.js`, `/* serve */
+            const api = require("./index.js")
+        `)
 
         const endTime = performance.now()
 

@@ -6,7 +6,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.watch_api = void 0;
 const nodemon_1 = __importDefault(require("nodemon"));
-const node_fs_1 = require("node:fs");
 const watch_api = (cf) => {
     const { dir, debug, log, npm } = cf;
     try {
@@ -19,9 +18,6 @@ const watch_api = (cf) => {
                 process.exit(0);
             }
         };
-        !(0, node_fs_1.existsSync)(`${dir}/dist/run.js`) && (0, node_fs_1.writeFileSync)(`${dir}/dist/run.js`, `/* serve */
-            const api = require("./index.js")
-        `);
         (0, nodemon_1.default)({
             "watch": [`${dir}/src`],
             "ignore": [

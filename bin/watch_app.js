@@ -6,7 +6,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.watch_app = void 0;
 const nodemon_1 = __importDefault(require("nodemon"));
-const node_fs_1 = require("node:fs");
 const watch_app = (cf) => {
     const { dir, debug, log, npm, port } = cf;
     try {
@@ -19,14 +18,6 @@ const watch_app = (cf) => {
                 process.exit(0);
             }
         };
-        !(0, node_fs_1.existsSync)(`${dir}/dist/run.js`) && (0, node_fs_1.writeFileSync)(`${dir}/dist/run.js`, `/* serve */
-            const express = require("express")
-            const app = express()
-            app.use(express.static("../dist"))
-            app.use(express.static("../public"))
-            app.use((req, res, next) => res.sendFile("../index.html"))
-            const l = app.listen(${port}, () => console.log("Started on port: " + l.address().port))
-        `);
         (0, nodemon_1.default)({
             "watch": [`${dir}/src`],
             "ignore": [
