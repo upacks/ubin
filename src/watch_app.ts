@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import nodemon from 'nodemon'
+import { writeFileSync, existsSync } from 'node:fs'
 
 export const watch_app = (cf) => {
 
@@ -18,6 +19,15 @@ export const watch_app = (cf) => {
             }
 
         }
+
+        !existsSync(`${dir}/dist/run.js`) && writeFileSync(`${dir}/dist/run.js`, `/* serve */
+            const express = require("express")
+            const app = express()
+            app.use(express.static("${dir}/dist"))
+            app.use(express.static("${dir}/public"))
+            app.use((req, res, next) => res.sendFile("${dir}/public/index.html"))
+            const l = app.listen(port, () => debug && log.info("Started on port: " + l.address().port))
+        `)
 
         nodemon({
             "watch": [`${dir}/src`],

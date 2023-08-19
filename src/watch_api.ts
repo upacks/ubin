@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import nodemon from 'nodemon'
+import { writeFileSync, existsSync } from 'node:fs'
 
 export const watch_api = (cf) => {
 
@@ -18,6 +19,10 @@ export const watch_api = (cf) => {
             }
 
         }
+
+        !existsSync(`${dir}/dist/run.js`) && writeFileSync(`${dir}/dist/run.js`, `/* serve */
+            const api = require("./index.js")
+        `)
 
         nodemon({
             "watch": [`${dir}/src`],
