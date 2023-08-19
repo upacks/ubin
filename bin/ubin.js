@@ -18,6 +18,7 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
         debug: false,
         types: false,
         bundle: false,
+        npm: false,
         inDir: `${dir}/src`,
         outDir: `${dir}/dist`,
         port: args.indexOf('--port') !== -1 ? Number(args[args.indexOf('--port') + 1]) : 3000,
@@ -36,6 +37,8 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
             cf.types = true;
         if (args.includes('--bundle'))
             cf.bundle = true;
+        if (args.includes('--npm'))
+            cf.npm = true;
         if (args.includes('watch_app'))
             (0, watch_app_1.watch_app)({ ...cf, log: _log('watch_app') });
         if (args.includes('build_app'))

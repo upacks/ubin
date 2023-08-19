@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.watch_api = void 0;
 const nodemon_1 = __importDefault(require("nodemon"));
 const watch_api = (cf) => {
-    const { dir, debug, log } = cf;
+    const { dir, debug, log, npm } = cf;
     try {
         const onExit = (code) => {
             if (code && code === 'SIGUSR2') {
@@ -26,7 +26,7 @@ const watch_api = (cf) => {
                 `${dir}/dist`,
             ],
             "ext": "ts,tsx,js,jsx,mjs,json",
-            "exec": "yarn build && yarn serve"
+            "exec": npm ? "npm run build && npm run serve" : "yarn build && yarn serve"
         })
             .on('start', () => debug && log.info('Nodemon event start'))
             .on('crash', () => debug && log.warn('Nodemon event crush'))

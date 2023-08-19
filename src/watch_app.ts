@@ -4,7 +4,7 @@ import nodemon from 'nodemon'
 
 export const watch_app = (cf) => {
 
-    const { dir, debug, log } = cf
+    const { dir, debug, log, npm } = cf
 
     try {
 
@@ -27,7 +27,7 @@ export const watch_app = (cf) => {
                 `${dir}/dist`,
             ],
             "ext": "ts,tsx,js,jsx,mjs,json",
-            "exec": "yarn build && yarn serve"
+            "exec": npm ? "npm run build && npm run serve" : "yarn build && yarn serve"
         })
             .on('start', () => debug && log.info('Nodemon event start'))
             .on('crash', () => debug && log.warn('Nodemon event crush'))

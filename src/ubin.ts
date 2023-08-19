@@ -23,6 +23,7 @@ if (existsSync(`${dir}/package.json`)) {
         debug: false,
         types: false,
         bundle: false,
+        npm: false,
         inDir: `${dir}/src`,
         outDir: `${dir}/dist`,
         port: args.indexOf('--port') !== -1 ? Number(args[args.indexOf('--port') + 1]) : 3000,
@@ -40,6 +41,7 @@ if (existsSync(`${dir}/package.json`)) {
         if (args.includes('--silent')) cf.debug = false
         if (args.includes('--types')) cf.types = true
         if (args.includes('--bundle')) cf.bundle = true
+        if (args.includes('--npm')) cf.npm = true
 
         if (args.includes('watch_app')) watch_app({ ...cf, log: _log('watch_app') })
         if (args.includes('build_app')) build_app({ ...cf, log: _log('build_app') })
