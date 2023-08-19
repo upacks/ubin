@@ -5,7 +5,7 @@ import { writeFileSync, existsSync } from 'node:fs'
 
 export const watch_app = (cf) => {
 
-    const { dir, debug, log, npm } = cf
+    const { dir, debug, log, npm, port } = cf
 
     try {
 
@@ -23,10 +23,10 @@ export const watch_app = (cf) => {
         !existsSync(`${dir}/dist/run.js`) && writeFileSync(`${dir}/dist/run.js`, `/* serve */
             const express = require("express")
             const app = express()
-            app.use(express.static("${dir}/dist"))
-            app.use(express.static("${dir}/public"))
-            app.use((req, res, next) => res.sendFile("${dir}/public/index.html"))
-            const l = app.listen(port, () => debug && log.info("Started on port: " + l.address().port))
+            app.use(express.static("../dist"))
+            app.use(express.static("../public"))
+            app.use((req, res, next) => res.sendFile("../index.html"))
+            const l = app.listen(${port}, () => console.log("Started on port: " + l.address().port))
         `)
 
         nodemon({

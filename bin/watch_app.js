@@ -8,7 +8,7 @@ exports.watch_app = void 0;
 const nodemon_1 = __importDefault(require("nodemon"));
 const node_fs_1 = require("node:fs");
 const watch_app = (cf) => {
-    const { dir, debug, log, npm } = cf;
+    const { dir, debug, log, npm, port } = cf;
     try {
         const onExit = (code) => {
             if (code && code === 'SIGUSR2') {
@@ -22,10 +22,10 @@ const watch_app = (cf) => {
         !(0, node_fs_1.existsSync)(`${dir}/dist/run.js`) && (0, node_fs_1.writeFileSync)(`${dir}/dist/run.js`, `/* serve */
             const express = require("express")
             const app = express()
-            app.use(express.static("${dir}/dist"))
-            app.use(express.static("${dir}/public"))
-            app.use((req, res, next) => res.sendFile("${dir}/public/index.html"))
-            const l = app.listen(port, () => debug && log.info("Started on port: " + l.address().port))
+            app.use(express.static("../dist"))
+            app.use(express.static("../public"))
+            app.use((req, res, next) => res.sendFile("../index.html"))
+            const l = app.listen(${port}, () => console.log("Started on port: " + l.address().port))
         `);
         (0, nodemon_1.default)({
             "watch": [`${dir}/src`],
