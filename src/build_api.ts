@@ -2,23 +2,20 @@
 
 import { buildSync } from 'esbuild'
 import { execSync } from 'child_process'
-import { writeFileSync, existsSync, readdirSync, statSync } from 'node:fs'
+import { writeFileSync, existsSync, readdirSync, statSync, lstatSync } from 'node:fs'
 import path from 'path'
 import { Now } from 'utils'
 
-const getAllFiles = (dirPath: any, arrayOfFiles: any = []) => {
+const traverseDir = (dir, ls = []) => {
 
-    const files = readdirSync(dirPath)
-    arrayOfFiles = arrayOfFiles || []
-    files.forEach((file) => {
-        if (statSync(dirPath + "/" + file).isDirectory()) {
-            arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles)
-        } else {
-            arrayOfFiles.push(path.join(__dirname, dirPath, "/", file))
-        }
+    const files = readdirSync(dir)
+    files.forEach(file => {
+        let fullPath = path.join(dir, file)
+        if (lstatSync(fullPath).isDirectory()) { ls = traverseDir(fullPath, ls) }
+        else { ls.push(fullPath) }
     })
+    return ls
 
-    return arrayOfFiles
 }
 
 export const build_api = (cf) => {
@@ -27,14 +24,12 @@ export const build_api = (cf) => {
 
     try {
 
-        const input = `${inDir}`
-        const output = `${outDir}`
-
         const startTime = performance.now()
 
         buildSync({
-            entryPoints: [getAllFiles(input)],
-            outfile: output,
+            entryPoints: traverseDir(inDir),
+            logLevel: debug ? "debug" : "warning",
+            outdir: outDir,
             bundle: bundle,
             minify: minify,
             sourcemap: false,

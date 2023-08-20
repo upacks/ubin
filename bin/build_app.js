@@ -14,6 +14,7 @@ const build_app = (cf) => {
         const startTime = performance.now();
         (0, esbuild_1.buildSync)({
             entryPoints: [input],
+            logLevel: debug ? "debug" : "warning",
             outfile: output,
             bundle: bundle,
             minify: minify,

@@ -18,6 +18,7 @@ export const build_app = (cf) => {
 
         buildSync({
             entryPoints: [input],
+            logLevel: debug ? "debug" : "warning",
             outfile: output,
             bundle: bundle,
             minify: minify,

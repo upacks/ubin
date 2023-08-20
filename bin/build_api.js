@@ -10,28 +10,27 @@ const child_process_1 = require("child_process");
 const node_fs_1 = require("node:fs");
 const path_1 = __importDefault(require("path"));
 const utils_1 = require("utils");
-const getAllFiles = (dirPath, arrayOfFiles = []) => {
-    const files = (0, node_fs_1.readdirSync)(dirPath);
-    arrayOfFiles = arrayOfFiles || [];
-    files.forEach((file) => {
-        if ((0, node_fs_1.statSync)(dirPath + "/" + file).isDirectory()) {
-            arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles);
+const traverseDir = (dir, ls = []) => {
+    const files = (0, node_fs_1.readdirSync)(dir);
+    files.forEach(file => {
+        let fullPath = path_1.default.join(dir, file);
+        if ((0, node_fs_1.lstatSync)(fullPath).isDirectory()) {
+            ls = traverseDir(fullPath, ls);
         }
         else {
-            arrayOfFiles.push(path_1.default.join(__dirname, dirPath, "/", file));
+            ls.push(fullPath);
         }
     });
-    return arrayOfFiles;
+    return ls;
 };
 const build_api = (cf) => {
     const { dir, debug, outDir, inDir, types, bundle, log, minify } = cf;
     try {
-        const input = `${inDir}`;
-        const output = `${outDir}`;
         const startTime = performance.now();
         (0, esbuild_1.buildSync)({
-            entryPoints: [getAllFiles(input)],
-            outfile: output,
+            entryPoints: traverseDir(inDir),
+            logLevel: debug ? "debug" : "warning",
+            outdir: outDir,
             bundle: bundle,
             minify: minify,
             sourcemap: false,
