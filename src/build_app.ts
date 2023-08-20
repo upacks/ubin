@@ -57,14 +57,15 @@ export const build_app = (cf) => {
 
             }
 
-            traverseDir(__dirname)
-
             const express = require("express")
             const app = express()
             app.use(express.static("${dir}/dist"))
             app.use(express.static("${dir}/public"))
             app.use((req, res, next) => res.sendFile("${dir}/public/index.html"))
-            const l = app.listen(${port}, () => log.success("Created at ${Now()} / Build in ${duration}s / Process " + process.pid + " / Port " + l.address().port))
+            const l = app.listen(${port}, () => {
+                traverseDir(__dirname)
+                log.success("Created at ${Now()} / Build in ${duration}s / Process " + process.pid + " / Port " + l.address().port)
+            })
 
         `)
 
