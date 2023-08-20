@@ -3,10 +3,11 @@
 import { buildSync } from 'esbuild'
 import { execSync } from 'child_process'
 import { writeFileSync, existsSync } from 'node:fs'
+import { Now } from 'utils'
 
 export const build_app = (cf) => {
 
-    const { dir, port, debug, outDir, inDir, types, bundle, log } = cf
+    const { dir, port, debug, outDir, inDir, types, bundle, log, minify } = cf
 
     try {
 
@@ -17,27 +18,31 @@ export const build_app = (cf) => {
 
         buildSync({
             entryPoints: [input],
-            // ...(debug ? { logLevel: "info" } : {}),
-            platform: "browser",
-            sourcemap: false,
             outfile: output,
             bundle: bundle,
-            minify: true,
+            minify: minify,
+            sourcemap: false,
+            platform: "browser",
             format: 'cjs',
         })
 
-        !existsSync(`${dir}/dist/run.js`) && writeFileSync(`${dir}/dist/run.js`, `/* serve */
+        const endTime = performance.now()
+        const duration = ((endTime - startTime) / 1000).toFixed(2)
+
+        !existsSync(`${dir}/dist/run.js`) && writeFileSync(`${dir}/dist/run.js`, `
+
+            const { log, moment } = require('utils')
+
             const express = require("express")
             const app = express()
             app.use(express.static("${dir}/dist"))
             app.use(express.static("${dir}/public"))
             app.use((req, res, next) => res.sendFile("${dir}/public/index.html"))
-            const l = app.listen(${port}, () => console.log("Started on port: " + l.address().port))
+            const l = app.listen(${port}, () => 
+                log.success("Created at ${Now()} / Build in ${duration}s / Process " + process.pid + " / Port " + l.address().port)
+            )
+
         `)
-
-        const endTime = performance.now()
-
-        debug && log.info(`Build in ${((endTime - startTime) / 1000).toFixed(2)}s`)
 
         types && execSync(`tsc --declaration --emitDeclarationOnly --outDir ${outDir} --baseUrl ${inDir}`)
 

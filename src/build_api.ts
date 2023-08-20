@@ -2,37 +2,56 @@
 
 import { buildSync } from 'esbuild'
 import { execSync } from 'child_process'
-import { writeFileSync, existsSync } from 'node:fs'
+import { writeFileSync, existsSync, readdirSync, statSync } from 'node:fs'
+import path from 'path'
+import { Now } from 'utils'
+
+const getAllFiles = (dirPath: any, arrayOfFiles: any = []) => {
+
+    const files = readdirSync(dirPath)
+    arrayOfFiles = arrayOfFiles || []
+    files.forEach((file) => {
+        if (statSync(dirPath + "/" + file).isDirectory()) {
+            arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles)
+        } else {
+            arrayOfFiles.push(path.join(__dirname, dirPath, "/", file))
+        }
+    })
+
+    return arrayOfFiles
+}
 
 export const build_api = (cf) => {
 
-    const { dir, debug, outDir, inDir, types, bundle, log } = cf
+    const { dir, debug, outDir, inDir, types, bundle, log, minify } = cf
 
     try {
 
-        const input = `${inDir}/index.ts`
-        const output = `${outDir}/index.js`
+        const input = `${inDir}`
+        const output = `${outDir}`
 
         const startTime = performance.now()
 
         buildSync({
-            entryPoints: [input],
-            // ...(debug ? { logLevel: "info" } : {}),
-            platform: "node",
-            sourcemap: false,
+            entryPoints: [getAllFiles(input)],
             outfile: output,
             bundle: bundle,
-            minify: true,
+            minify: minify,
+            sourcemap: false,
+            platform: "node",
             format: 'cjs',
         })
 
-        !existsSync(`${dir}/dist/run.js`) && writeFileSync(`${dir}/dist/run.js`, `/* serve */
-            const api = require("./index.js")
-        `)
-
         const endTime = performance.now()
+        const duration = ((endTime - startTime) / 1000).toFixed(2)
 
-        debug && log.info(`Build in ${((endTime - startTime) / 1000).toFixed(2)}s`)
+        !existsSync(`${dir}/dist/run.js`) && writeFileSync(`${dir}/dist/run.js`, `
+
+            const { log, moment } = require('utils')
+            log.success("Created at ${Now()} / Build in ${duration}s / Process " + process.pid)
+            require("./index.js")
+
+        `)
 
         types && execSync(`tsc --declaration --emitDeclarationOnly --outDir ${outDir} --baseUrl ${inDir}`)
 

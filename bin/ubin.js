@@ -18,6 +18,7 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
         debug: false,
         types: false,
         bundle: false,
+        minify: false,
         npm: false,
         inDir: `${dir}/src`,
         outDir: `${dir}/dist`,
@@ -37,6 +38,8 @@ if ((0, node_fs_1.existsSync)(`${dir}/package.json`)) {
             cf.types = true;
         if (args.includes('--bundle'))
             cf.bundle = true;
+        if (args.includes('--minify'))
+            cf.minify = true;
         if (args.includes('--npm'))
             cf.npm = true;
         if (args.includes('watch_app'))
