@@ -1,0 +1,49 @@
+name: "TS-Builder"
+
+on:
+  push:
+    branches:
+      - "*"
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  buildPack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 🚀 Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - name: 🚀 Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: 🚀 Build
+        run: yarn build
+
+      - name: 🚀 Commit packed js
+        id: commitPackedJs
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          mkdir _bin
+          mv ./bin ./_bin
+          cp ./package.json ./_bin
+          cp ./yarn.lock ./_bin
+
+          git add ./_bin
+          git commit -m "By GH-Actions"
+
+      - name: 🚀 Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_bin
+          publish_branch: production-build
+          force_orphan: true
