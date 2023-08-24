@@ -32,19 +32,19 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-          mkdir _bin
-          mv ./bin ./_bin
-          cp -r ./static ./_bin
-          cp ./package.json ./_bin
-          cp ./yarn.lock ./_bin
+          mkdir stage
+          mv ./bin ./stage
+          cp -r ./static ./stage
+          cp ./package.json ./stage
+          cp ./yarn.lock ./stage
 
-          git add ./_bin
+          git add ./stage
           git commit -m "By GH-Actions"
 
       - name: 🚀 Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_bin
+          publish_dir: ./stage
           publish_branch: production-build
           force_orphan: true
