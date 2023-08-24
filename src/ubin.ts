@@ -5,11 +5,9 @@ import { log } from 'utils'
 
 import { watch_api } from './watch_api'
 import { build_api } from './build_api'
-import { serve_api } from './serve_api'
 
 import { watch_app } from './watch_app'
 import { build_app } from './build_app'
-import { serve_app } from './serve_app'
 
 const args: string[] = process.argv
 const dir: string = process.cwd()
@@ -47,11 +45,9 @@ if (existsSync(`${dir}/package.json`)) {
 
         if (args.includes('watch_app')) watch_app({ ...cf, log: _log('watch_app') })
         if (args.includes('build_app')) build_app({ ...cf, log: _log('build_app') })
-        if (args.includes('serve_app')) serve_app({ ...cf, log: _log('serve_app') })
 
         if (args.includes('watch_api')) watch_api({ ...cf, log: _log('watch_api') })
         if (args.includes('build_api')) build_api({ ...cf, log: _log('build_api') })
-        if (args.includes('serve_api')) serve_api({ ...cf, log: _log('serve_api') })
 
     } else {
 

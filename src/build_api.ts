@@ -40,7 +40,7 @@ export const build_api = (cf) => {
         const endTime = performance.now()
         const duration = ((endTime - startTime) / 1000).toFixed(2)
 
-        !existsSync(`${dir}/dist/run.js`) && writeFileSync(`${dir}/dist/run.js`, `
+        writeFileSync(`${dir}/dist/run.js`, `
 
             const { log, moment } = require('utils')
             const path = require('path')
@@ -70,6 +70,12 @@ export const build_api = (cf) => {
             traverseDir(__dirname)
 
             log.success("Created at ${Now()} / Build in ${duration}s / Process " + process.pid)
+
+            /* 
+                Browsers will by default try to request /favicon.ico from the root of a hostname, in order to show an icon in the browser tab.
+                app.get('/favicon.ico', (req, res) => res.status(204))
+            */
+
             require("./index.js")
 
         `)

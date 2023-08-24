@@ -2,7 +2,7 @@
 
 import { buildSync } from 'esbuild'
 import { execSync } from 'child_process'
-import { writeFileSync, existsSync } from 'node:fs'
+import { writeFileSync, existsSync, cpSync } from 'node:fs'
 import { Now } from 'utils'
 
 export const build_app = (cf) => {
@@ -30,7 +30,11 @@ export const build_app = (cf) => {
         const endTime = performance.now()
         const duration = ((endTime - startTime) / 1000).toFixed(2)
 
-        !existsSync(`${dir}/dist/run.js`) && writeFileSync(`${dir}/dist/run.js`, `
+        const html = existsSync(`${dir}/public/index.html`) ? `${dir}/public/index.html` : `${dir}/dist/index.html`
+
+        cpSync('../static', `${dir}/dist`, { recursive: true })
+
+        writeFileSync(`${dir}/dist/run.js`, `
 
             const { log, moment } = require('utils')
             const path = require('path')
@@ -61,7 +65,7 @@ export const build_app = (cf) => {
             const app = express()
             app.use(express.static("${dir}/dist"))
             app.use(express.static("${dir}/public"))
-            app.use((req, res, next) => res.sendFile("${dir}/public/index.html"))
+            app.use((req, res, next) => res.sendFile("${html}"))
             const l = app.listen(${port}, () => {
                 traverseDir(__dirname)
                 log.success("Created at ${Now()} / Build in ${duration}s / Process " + process.pid + " / Port " + l.address().port)
