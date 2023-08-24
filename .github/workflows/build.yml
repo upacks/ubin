@@ -34,7 +34,7 @@ jobs:
 
           mkdir _bin
           mv ./bin ./_bin
-          cp ./static ./_bin
+          cp -r ./static ./_bin
           cp ./package.json ./_bin
           cp ./yarn.lock ./_bin
 
