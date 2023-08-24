@@ -32,7 +32,7 @@ export const build_app = (cf) => {
 
         const html = existsSync(`${dir}/public/index.html`) ? `${dir}/public/index.html` : `${dir}/dist/index.html`
 
-        cpSync('../static', `${dir}/dist`, { recursive: true })
+        cpSync(`${__dirname}/../static`, `${dir}/dist`, { recursive: true })
 
         writeFileSync(`${dir}/dist/run.js`, `
 
