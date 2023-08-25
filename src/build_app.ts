@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { buildSync } from 'esbuild'
 import { execSync } from 'child_process'
 import { writeFileSync, existsSync, cpSync } from 'node:fs'

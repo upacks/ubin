@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { readFileSync, existsSync } from 'node:fs'
 import { log } from 'utils'
 

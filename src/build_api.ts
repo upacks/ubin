@@ -1,12 +1,10 @@
-#!/usr/bin/env node
-
 import { buildSync } from 'esbuild'
 import { execSync } from 'child_process'
 import { writeFileSync, existsSync, readdirSync, statSync, lstatSync } from 'node:fs'
 import path from 'path'
 import { Now } from 'utils'
 
-const traverseDir = (dir, ls = []) => {
+const traverseDir = (dir, ls: any = []) => {
 
     const files = readdirSync(dir)
     files.forEach(file => {

@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import nodemon from 'nodemon'
 
 export const watch_app = (cf) => {
