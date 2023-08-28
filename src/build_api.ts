@@ -58,7 +58,8 @@ export const build_api = (cf) => {
                     const stats = statSync(file)
                     const fileSizeInBytes = stats.size
                     const fileSizeInMegabytes = (fileSizeInBytes / (1024 * 1024)).toFixed(2)
-                    log.info("..." + file.substring(file.length - 24, file.length) + " -> " + fileSizeInMegabytes + "mb bundle size / [" + moment(stats.mtime).fromNow() + "]")
+                    const show = file.indexOf('.js') >= 0
+                    show && log.info("..." + file.substring(file.length - 24, file.length) + " -> " + fileSizeInMegabytes + "mb bundle size / [" + moment(stats.mtime).fromNow() + "]")
                 })
 
                 return ls
