@@ -1,6 +1,6 @@
 {
   "name": "ubin",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "repository": "git@github.com:upacks/ubin.git",
   "author": "gantulga.khuyag@gmail.com",
   "license": "MIT",
@@ -22,7 +22,7 @@
     "start": "nodemon",
     "build": "rimraf ./bin && tsc -p tsconfig.json",
     "serve": "node ./bin/ubin.js",
-    "release": "git pull && yarn version --patch && git add . && git push --follow-tags"
+    "release": "yarn version --patch && git add . && git push"
   },
   "dependencies": {
     "esbuild": "^0.19.2",
