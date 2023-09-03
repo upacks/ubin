@@ -65,7 +65,7 @@ export const build_app = (cf) => {
 
             log.success("Created at ${Now()} / Build in ${duration}s / Process " + process.pid + " / Port ${port}")
 
-            new Host({ name: '${name}', port: ${port}, static: ${dir} })
+            new Host({ name: '${name}', port: ${port}, static: '${dir}' })
 
         `)
 
