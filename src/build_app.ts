@@ -5,7 +5,7 @@ import { Now } from 'utils'
 
 export const build_app = (cf) => {
 
-    const { dir, port, debug, outDir, inDir, types, bundle, log, minify } = cf
+    const { name, version, dir, port, debug, outDir, inDir, types, bundle, log, minify } = cf
 
     try {
 
@@ -34,9 +34,11 @@ export const build_app = (cf) => {
 
         writeFileSync(`${dir}/dist/run.js`, `
 
-            const { log, moment } = require('utils')
             const path = require('path')
             const { readdirSync, statSync, lstatSync } = require('node:fs')
+
+            const { log, moment } = require('utils')
+            const { Host } = require('unet')
 
             const traverseDir = (dir, ls = []) => {
 
@@ -46,7 +48,6 @@ export const build_app = (cf) => {
                     if (lstatSync(fullPath).isDirectory()) { ls = traverseDir(fullPath, ls) }
                     else { ls.push(fullPath) }
                 })
-
 
                 ls.map(file => {
                     const stats = statSync(file)
@@ -60,15 +61,11 @@ export const build_app = (cf) => {
 
             }
 
-            const express = require("express")
-            const app = express()
-            app.use(express.static("${dir}/dist"))
-            app.use(express.static("${dir}/public"))
-            app.use((req, res, next) => res.sendFile("${html}"))
-            const l = app.listen(${port}, () => {
-                traverseDir(__dirname)
-                log.success("Created at ${Now()} / Build in ${duration}s / Process " + process.pid + " / Port " + l.address().port)
-            })
+            traverseDir(__dirname)
+
+            log.success("Created at ${Now()} / Build in ${duration}s / Process " + process.pid + " / Port ${port}")
+
+            new Host({ name: '${name}', port: ${port}, static: ${dir} })
 
         `)
 

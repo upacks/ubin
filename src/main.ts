@@ -15,6 +15,8 @@ if (existsSync(`${dir}/package.json`)) {
     const pkg: any = JSON.parse(String(readFileSync(`${dir}/package.json`) ?? ""))
 
     const cf = {
+        name: '',
+        version: '',
         dir: dir,
         debug: false,
         types: false,
@@ -33,6 +35,9 @@ if (existsSync(`${dir}/package.json`)) {
     })
 
     if (pkg && pkg.name && pkg.version) {
+
+        cf.name = pkg.name
+        cf.version = pkg.version
 
         if (args.includes('--debug')) cf.debug = true
         if (args.includes('--silent')) cf.debug = false
