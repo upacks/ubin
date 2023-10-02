@@ -1,11 +1,11 @@
 import { buildSync } from 'esbuild'
 import { execSync } from 'child_process'
 import { writeFileSync, existsSync, cpSync } from 'node:fs'
-import { Now } from 'utils'
+import { decodeENV, Now, Sfy } from 'utils'
 
 export const build_app = (cf) => {
 
-    const { name, version, dir, port, debug, outDir, inDir, types, bundle, log, minify } = cf
+    const { name, dir, port, debug, outDir, inDir, types, bundle, log, minify } = cf
 
     try {
 
@@ -28,9 +28,8 @@ export const build_app = (cf) => {
         const endTime = performance.now()
         const duration = ((endTime - startTime) / 1000).toFixed(2)
 
-        const html = existsSync(`${dir}/public/index.html`) ? `${dir}/public/index.html` : `${dir}/dist/index.html`
-
         cpSync(`${__dirname}/../static`, `${dir}/dist`, { recursive: true })
+        writeFileSync(`${dir}/dist/env.js`, `var env = ${Sfy(decodeENV())}`)
 
         writeFileSync(`${dir}/dist/run.js`, `
 
