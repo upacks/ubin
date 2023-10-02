@@ -27,10 +27,9 @@ export const build_app = (cf) => {
 
         const endTime = performance.now()
         const duration = ((endTime - startTime) / 1000).toFixed(2)
+        const env = `var env = ${Sfy(decodeENV())}`
 
         cpSync(`${__dirname}/../static`, `${dir}/dist`, { recursive: true })
-        writeFileSync(`${dir}/dist/env.js`, `var env = ${Sfy(decodeENV())}`)
-
         writeFileSync(`${dir}/dist/run.js`, `
 
             const path = require('path')
@@ -61,6 +60,8 @@ export const build_app = (cf) => {
             }
 
             traverseDir(__dirname)
+
+            writeFileSync('/env.js', ${env})
 
             log.success("Created at ${Now()} / Build in ${duration}s / Process " + process.pid + " / Port ${port}")
 
