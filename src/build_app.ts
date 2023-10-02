@@ -33,7 +33,7 @@ export const build_app = (cf) => {
         writeFileSync(`${dir}/dist/run.js`, `
 
             const path = require('path')
-            const { readdirSync, statSync, lstatSync } = require('node:fs')
+            const { writeFileSync, readdirSync, statSync, lstatSync } = require('node:fs')
 
             const { log, moment } = require('utils')
             const { Host } = require('unet')
@@ -61,7 +61,7 @@ export const build_app = (cf) => {
 
             traverseDir(__dirname)
 
-            writeFileSync('/env.js', ${env})
+            writeFileSync('./env.js', '${env}')
 
             log.success("Created at ${Now()} / Build in ${duration}s / Process " + process.pid + " / Port ${port}")
 
