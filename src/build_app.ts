@@ -1,7 +1,7 @@
 import { buildSync } from 'esbuild'
 import { execSync } from 'child_process'
-import { writeFileSync, existsSync, cpSync } from 'node:fs'
-import { decodeENV, Now, Sfy } from 'utils'
+import { writeFileSync, cpSync } from 'node:fs'
+import { Now } from 'utils'
 
 export const build_app = (cf) => {
 
