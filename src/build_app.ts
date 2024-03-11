@@ -1,16 +1,16 @@
 import { buildSync } from 'esbuild'
 import { execSync } from 'child_process'
-import { writeFileSync, cpSync } from 'node:fs'
+import { readFileSync, writeFileSync, cpSync } from 'node:fs'
 import { Now } from 'utils'
 
 export const build_app = (cf) => {
 
-    const { name, dir, port, debug, outDir, inDir, types, bundle, log, minify } = cf
+    const { name, version, dir, port, debug, outDir, inDir, types, bundle, log, minify } = cf
 
     try {
 
         const input = `${inDir}/index.tsx`
-        const output = `${outDir}/index.js`
+        const output = `${outDir}/index.${version}.js`
 
         const startTime = performance.now()
 
@@ -29,6 +29,12 @@ export const build_app = (cf) => {
         const duration = ((endTime - startTime) / 1000).toFixed(2)
 
         cpSync(`${__dirname}/../static`, `${dir}/dist`, { recursive: true })
+
+
+        const html = readFileSync(`${__dirname}/../static/index.html`) /** READ */
+        const modify = String(html).replace(`index.js`, `index.${version}.js`).replace(`env.js`, `env.${version}.js`)
+        writeFileSync(`${dir}/dist/index.html`, modify)
+
         writeFileSync(`${dir}/dist/run.js`, `
 
             const path = require('path')
@@ -60,7 +66,7 @@ export const build_app = (cf) => {
 
             traverseDir(__dirname)
 
-            writeFileSync('./dist/env.js', "var env = " + Sfy(decodeENV()) + "; window.env = env;")
+            writeFileSync('./dist/env.${version}.js', "var env = " + Sfy(decodeENV()) + "; window.env = env;")
 
             log.success("Created at ${Now()} / Build in ${duration}s / Process " + process.pid + " / Port ${port}")
 
