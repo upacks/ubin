@@ -9,8 +9,9 @@ export const build_app = (cf) => {
 
     try {
 
+        const key = `${Date.now()}`
         const input = `${inDir}/index.tsx`
-        const output = `${outDir}/index.${version}.js`
+        const output = `${outDir}/index.${key}.js`
 
         const startTime = performance.now()
 
@@ -31,8 +32,10 @@ export const build_app = (cf) => {
         cpSync(`${__dirname}/../static`, `${dir}/dist`, { recursive: true })
 
 
-        const html = readFileSync(`${__dirname}/../static/index.html`) /** READ */
-        const modify = String(html).replace(`index.js`, `index.${version}.js`).replace(`env.js`, `env.${version}.js`)
+        const html = readFileSync(`${__dirname}/../static/index.html`, "utf-8")
+        let modify = String(html)
+            .replace(`index.js`, `index.${key}.js`)
+            .replace(`env.js`, `env.${key}.js`)
         writeFileSync(`${dir}/dist/index.html`, modify)
 
         writeFileSync(`${dir}/dist/run.js`, `
@@ -66,7 +69,7 @@ export const build_app = (cf) => {
 
             traverseDir(__dirname)
 
-            writeFileSync('./dist/env.${version}.js', "var env = " + Sfy(decodeENV()) + "; window.env = env;")
+            writeFileSync('./dist/env.${key}.js', "var env = " + Sfy(decodeENV()) + "; window.env = env;")
 
             log.success("Created at ${Now()} / Build in ${duration}s / Process " + process.pid + " / Port ${port}")
 
