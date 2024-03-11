@@ -9,7 +9,7 @@ export const build_app = (cf) => {
 
     try {
 
-        const key = `${Date.now()}`
+        const key = `${version}`
         const input = `${inDir}/index.tsx`
         const output = `${outDir}/index.${key}.js`
 
