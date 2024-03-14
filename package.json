@@ -1,6 +1,6 @@
 {
   "name": "ubin",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "repository": "git@github.com:upacks/ubin.git",
   "author": "gantulga.khuyag@gmail.com",
   "license": "MIT",
@@ -25,7 +25,6 @@
     "release": "yarn version --patch && git add . && git push"
   },
   "dependencies": {
-    "es5-ext": "^0.10.64",
     "esbuild": "^0.19.2",
     "express": "^4.18.2",
     "nodemon": "^3.0.1",
