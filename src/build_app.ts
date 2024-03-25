@@ -36,6 +36,7 @@ export const build_app = (cf) => {
         let modify = String(html)
             .replace(`index.js`, `index.${key}.js`)
             .replace(`env.js`, `env.${key}.js`)
+            .replace(`GearLink ©`, `GearLink © [ ${name} ➧ ${version} ➧ ${Now()} ] 🚀`)
         writeFileSync(`${dir}/dist/index.html`, modify)
 
         writeFileSync(`${dir}/dist/run.js`, `
