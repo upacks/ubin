@@ -1,0 +1,38 @@
+{
+  "name": "ubin",
+  "version": "1.0.24",
+  "repository": "git@github.com:upacks/ubin.git",
+  "author": "gantulga.khuyag@gmail.com",
+  "license": "MIT",
+  "type": "commonjs",
+  "bin": {
+    "ubin": "./bin/ubin.js"
+  },
+  "main": "./bin/ubin.js",
+  "types": "./bin/ubin.d.ts",
+  "ts-module": "./bin/ubin.ts",
+  "exports": {
+    ".": {
+      "import": "./bin/ubin.js",
+      "require": "./bin/ubin.js",
+      "ts-import": "./bin/ubin.ts"
+    }
+  },
+  "scripts": {
+    "start": "nodemon",
+    "build": "rimraf ./bin && tsc -p tsconfig.json",
+    "serve": "node ./bin/ubin.js",
+    "release": "yarn version --patch && git add . && git push"
+  },
+  "dependencies": {
+    "esbuild": "^0.19.2",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1",
+    "utils": "upacks/utils#1.1.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.0",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.1.6"
+  }
+}
