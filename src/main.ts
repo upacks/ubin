@@ -22,6 +22,7 @@ if (existsSync(`${dir}/package.json`)) {
         types: false,
         bundle: false,
         minify: false,
+        sourcemap: false,
         npm: false,
         inDir: `${dir}/src`,
         outDir: `${dir}/dist`,
@@ -44,6 +45,7 @@ if (existsSync(`${dir}/package.json`)) {
         if (args.includes('--types')) cf.types = true
         if (args.includes('--bundle')) cf.bundle = true
         if (args.includes('--minify')) cf.minify = true
+        if (args.includes('--sourcemap')) cf.sourcemap = true
         if (args.includes('--npm')) cf.npm = true
 
         if (args.includes('watch_app')) watch_app({ ...cf, log: _log('watch_app') })

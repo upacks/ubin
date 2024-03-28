@@ -5,7 +5,7 @@ import { Now } from 'utils'
 
 export const build_app = (cf) => {
 
-    const { name, version, dir, port, debug, outDir, inDir, types, bundle, log, minify } = cf
+    const { name, version, dir, port, debug, outDir, inDir, types, bundle, log, minify, sourcemap } = cf
 
     try {
 
@@ -19,11 +19,11 @@ export const build_app = (cf) => {
             entryPoints: [input],
             logLevel: debug ? "debug" : "warning",
             outfile: output,
-            bundle: bundle,
-            minify: minify,
-            sourcemap: false,
             platform: "browser",
             format: 'cjs',
+            bundle: bundle,
+            minify: minify,
+            sourcemap: sourcemap,
         })
 
         const endTime = performance.now()
