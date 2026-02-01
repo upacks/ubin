@@ -25,7 +25,7 @@ export const watch_api = (cf) => {
                 `${dir}/dist`,
             ],
             "ext": "ts,tsx,js,jsx,mjs,json",
-            "exec": npm ? "npm run build && npm run serve" : "yarn build && yarn serve"
+            "exec": npm ? "npm run clear && npm run build && npm run serve" : "yarn clear && yarn build && yarn serve"
         })
             .on('start', () => debug && log.info('Nodemon event start'))
             .on('crash', () => debug && log.warn('Nodemon event crush'))
